@@ -140,24 +140,6 @@ function addCube({ position, scale, subdivisions, noiseScale, randAxis, randAngl
           scene.add(myLine);
         } else {
           for (let i = 0; i < 4; i++) {
-            // const vertexString0 = canonical[i].x.toFixed(2) + "," + 
-            //                       canonical[i].y.toFixed(2) + "," + 
-            //                       canonical[i].z.toFixed(2);
-            // const vertexString1 = canonical[(i+1) % 4].x.toFixed(2) + "," + 
-            //                       canonical[(i+1) % 4].y.toFixed(2) + "," +
-            //                       canonical[(i+1) % 4].z.toFixed(2);
-      
-            // const l1 = vertexString0 + ":" + vertexString1;
-            // const l2 = vertexString1 + ":" + vertexString0;
-      
-            // if (faceRenderingMemo[l1] || faceRenderingMemo[l2]) {
-            //   console.log("skipping: " + l1);
-            //   continue;
-            // }
-      
-            // faceRenderingMemo[l1] = true;
-            // faceRenderingMemo[l2] = true;
-      
             const geometry = new LineGeometry();
             geometry.setPositions([
               vertices[i].x, vertices[i].y, vertices[i].z,
