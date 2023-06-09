@@ -76,12 +76,6 @@ function addCube({ position, scale, subdivisions, noiseScale, randAxis, randAngl
           // go back to -1...1 from 0...1
           v.multiplyScalar(2).addScalar(-1);
         });
-  
-        // necessary to "record" which vertices have been already rendered,
-        // this will be useful to avoid overdraw of backfacing lines that are dashed
-        // canonical will store the initially "rotated" vertices that are 
-        // saved as the "default cube" vertices, thus before applying the random axis rotation  
-        const canonical = [];
       
         const normal = new Vector3(0, 0, 1);
       
@@ -108,7 +102,6 @@ function addCube({ position, scale, subdivisions, noiseScale, randAxis, randAngl
       
         vertices.forEach((v) => {
           v.applyAxisAngle(rotAxis, rotAngle);
-          canonical.push(new Vector3().copy(v));
         });
         normal.applyAxisAngle(rotAxis, rotAngle);
       
@@ -139,19 +132,14 @@ function addCube({ position, scale, subdivisions, noiseScale, randAxis, randAngl
         
           scene.add(myLine);
         } else {
-          for (let i = 0; i < 4; i++) {
-            const geometry = new LineGeometry();
-            geometry.setPositions([
-              vertices[i].x, vertices[i].y, vertices[i].z,
-              vertices[(i+1) % 4].x, vertices[(i+1) % 4].y, vertices[(i+1) % 4].z,
-            ]);
+          const geometry = new LineGeometry();
+          geometry.setPositions(geoVertices);
         
-            const myLine = new Line2(geometry, backMaterial);
-            myLine.computeLineDistances();
-            myLine.renderOrder = 1; 
+          const myLine = new Line2(geometry, backMaterial);
+          myLine.computeLineDistances();
+          myLine.renderOrder = 1; 
       
-            scene.add(myLine);
-          }
+          scene.add(myLine);
         }
       }  
     }
